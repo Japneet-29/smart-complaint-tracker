@@ -3,6 +3,9 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import ComplaintPage from './pages/ComplaintPage'; // adjust path if needed
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminPage from './pages/AdminPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -18,6 +21,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -12,7 +12,12 @@ router.post('/register', async (req, res) => {
     if (existing) return res.status(400).json({ error: 'User already exists' });
 
     const hashed = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashed });
+
+    // Automatically assign admin rights to specific email
+    const adminEmails = ['admin@pec.edu.in'];
+    const isAdmin = adminEmails.includes(email.toLowerCase());
+
+    const user = new User({ name, email, password: hashed, isAdmin });
     await user.save();
 
     res.status(201).json({ message: 'User registered successfully' });
@@ -35,10 +40,17 @@ router.post('/login', async (req, res) => {
       expiresIn: '1d'
     });
 
-    res.status(200).json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    res.status(200).json({ 
+      token, 
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email, 
+        isAdmin: user.isAdmin
+      } 
+    });
   } catch (err) {
     res.status(500).json({ error: 'Login failed' });
   }
 });
-
 module.exports = router;

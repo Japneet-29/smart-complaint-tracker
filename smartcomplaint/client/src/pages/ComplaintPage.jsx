@@ -58,12 +58,18 @@ function ComplaintPage() {
     localStorage.removeItem('token');
     window.location.href = '/login';
   };
-
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
   return (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 20 }}>
       <button onClick={handleLogout} style={{ float: 'right' }}>Logout</button>
+      
+      {isAdmin && (
+        <a href="/admin" style={{ display: 'inline-block', marginBottom: 10, color: 'green' }}>
+          🛠️ Go to Admin Panel
+        </a>
+      )}
       <h2>📮 Submit a Complaint</h2>
-
+      
       <form onSubmit={handleSubmit}>
         <input
           type="text"
