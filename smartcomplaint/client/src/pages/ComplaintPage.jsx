@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function ComplaintPage() {
   const [form, setForm] = useState({
@@ -58,7 +59,26 @@ function ComplaintPage() {
     localStorage.removeItem('token');
     window.location.href = '/login';
   };
+  const markResolved = async (id) => {
+  try {
+    const token = localStorage.getItem('token');
+    await axios.patch(`http://localhost:5000/api/complaints/${id}/status`, 
+      { status: 'resolved' }, 
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    toast.success("Marked as resolved");
+    fetchComplaints(); // refresh
+  } catch (err) {
+    toast.error("Failed to update status");
+  }
+  };
+
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  const sortedComplaints = [...complaints].sort((a, b) => {
+    if (a.status === 'resolved' && b.status !== 'resolved') return 1;
+    if (a.status !== 'resolved' && b.status === 'resolved') return -1;
+    return 0;
+  });
   return (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 20 }}>
       <button onClick={handleLogout} style={{ float: 'right' }}>Logout</button>
@@ -105,7 +125,7 @@ function ComplaintPage() {
 
       <h3>📋 Complaints List</h3>
       <ul>
-        {complaints.map((c) => (
+        {sortedComplaints.map((c) => (
           <li
             key={c._id}
             style={{
@@ -113,13 +133,36 @@ function ComplaintPage() {
               border: '1px solid #ccc',
               padding: '10px',
               borderRadius: '8px',
+              opacity: c.status === 'resolved' ? 0.6 : 1, 
+              textDecoration: c.status === 'resolved' ? 'line-through' : 'none', 
             }}
           >
             <strong>{c.title}</strong> — Room {c.room}
             <br />
             <em>{c.description}</em>
             <br />
+            <span><strong>Category:</strong> {c.category || 'Uncategorized'}</span>
+            <br />
+            <br />
             <small>{new Date(c.date).toLocaleString()}</small>
+            {c.status !== "resolved" && (
+              <button
+                onClick={() => markResolved(c._id)}
+                style={{
+                  background: "green",
+                  color: "white",
+                  border: "none",
+                  padding: "5px 10px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  marginTop: "10px",
+                  marginRight: "10px"
+                  
+                }}
+              >
+                Mark as Resolved
+              </button>
+            )}
           </li>
         ))}
       </ul>

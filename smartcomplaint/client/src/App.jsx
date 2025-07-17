@@ -23,6 +23,7 @@ function App() {
         />
         <Route path="/admin" element={<AdminPage />} />
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
     </BrowserRouter>
   );
 }
