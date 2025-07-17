@@ -6,7 +6,7 @@ A MERN stack project that allows users to register complaints with automatic cat
 - User authentication
 - Complaint submission and tracking
 - AI-based auto-categorization of complaints
-- Admin dashboard (upcoming)
+- Admin dashboard
 
 ## Tech Stack
 - MongoDB
