@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 async function categorizeComplaint(text) {
   try {
-    const model = genAI.getGenerativeModel({ model: "models/gemini-1.5-pro-latest" });
+    const model = genAI.getGenerativeModel({ model: "models/gemini-2.5-pro-latest" });
 
     const prompt = `Categorize the following complaint into one of these categories: 
     Mess Food, Maintenance, Electrical, Plumbing, , WiFi, Noise or other .\n\nComplaint: "${text}"\n\nOnly return the category name.`;
