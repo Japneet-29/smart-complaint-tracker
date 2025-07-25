@@ -8,8 +8,7 @@ const complaintRoutes = require('./routes/complaintRoutes');
 
 const app = express();
 app.use(cors({
-  origin: 'https://smart-complaint.onrender.com',
-  credentials: true
+  origin: '*'
 }));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
