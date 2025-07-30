@@ -10,11 +10,12 @@ function Login() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+  
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', form);
+      const res = await axios.post(`${baseURL}/api/auth/login`, form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('isAdmin', res.data.user.isAdmin);
       setMessage('✅ Login successful');
