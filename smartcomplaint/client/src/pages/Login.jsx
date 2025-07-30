@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import api from '../api.js';
 function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
@@ -10,12 +9,11 @@ function Login() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${baseURL}/api/auth/login`, form);
+      const res = await api.post('/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('isAdmin', res.data.user.isAdmin);
       setMessage('✅ Login successful');

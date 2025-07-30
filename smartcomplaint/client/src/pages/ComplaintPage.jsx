@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import api from '../api.js';
 function ComplaintPage() {
   const [form, setForm] = useState({
     title: '',
@@ -16,7 +15,7 @@ function ComplaintPage() {
   const fetchComplaints = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/complaints', {
+      const res = await api.get('/api/complaints', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -41,7 +40,7 @@ function ComplaintPage() {
     const token = localStorage.getItem('token');
 
     try {
-      await axios.post('http://localhost:5000/api/complaints', form, {
+      await api.post('/api/complaints', form, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -62,7 +61,7 @@ function ComplaintPage() {
   const markResolved = async (id) => {
   try {
     const token = localStorage.getItem('token');
-    await axios.patch(`http://localhost:5000/api/complaints/${id}/status`, 
+    await api.patch(`/api/complaints/${id}/status`, 
       { status: 'resolved' }, 
       { headers: { Authorization: `Bearer ${token}` } }
     );

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import api from '../api';
 
 function AdminPage() {
   const [complaints, setComplaints] = useState([]);
@@ -21,7 +21,7 @@ function AdminPage() {
   const fetchComplaints = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/complaints/admin", {
+      const res = await api.get("/api/complaints/admin", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ function AdminPage() {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/complaints/${id}`, {
+      await api.delete(`/api/complaints/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -67,7 +67,7 @@ function AdminPage() {
         Authorization: `Bearer ${token}`,
       };
 
-      await axios.put(`http://localhost:5000/api/complaints/${id}/resolve`, {}, { headers });
+      await api.put(`/api/complaints/${id}/resolve`, {}, { headers });
       toast.success("Marked as resolved");
       fetchComplaints(); // Refresh the list
     } catch (err) {
