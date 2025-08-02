@@ -12,14 +12,19 @@ const allowedOrigins = [
   'https://smart-complaint-frontend.onrender.com'
 ];
 
-app.use(cors({
+/*app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
     return callback(new Error('Not allowed by CORS'));
   }
+}));*/
+app.use(cors({
+  origin: '*',
+  credentials: true
 }));
+
 
 app.get('/', (req, res) => {
   res.send('Backend is live ✅');
