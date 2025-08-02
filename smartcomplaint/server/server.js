@@ -9,7 +9,7 @@ const complaintRoutes = require('./routes/complaintRoutes');
 const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://smart-complaint.onrender.com'
+  'https://smart-complaint-frontend.onrender.com'
 ];
 
 app.use(cors({
@@ -20,6 +20,11 @@ app.use(cors({
     return callback(new Error('Not allowed by CORS'));
   }
 }));
+
+app.get('/', (req, res) => {
+  res.send('Backend is live ✅');
+});
+
 
 app.use(express.json());
 app.use('/api/auth', authRoutes);
