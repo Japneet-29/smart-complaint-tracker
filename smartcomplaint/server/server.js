@@ -25,13 +25,10 @@ app.use(cors({
   credentials: true
 }));
 
-
+app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Backend is live ✅');
 });
-
-
-app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/complaints', complaintRoutes);
 
