@@ -1,18 +1,27 @@
 # Smart Complaint Tracker
 
-A MERN stack project that allows users to register complaints with automatic category detection using AI.
+A MERN stack web application for smart complaint registration and management.
 
-## Features
-- User authentication
-- Complaint submission and tracking
-- AI-based auto-categorization of complaints
-- Admin dashboard
+## 🌐 Live Links
+- Frontend: [Smart Complaint Tracker Frontend](https://smart-complaint-frontend.onrender.com)
+- Backend API: [Smart Complaint Tracker Backend](https://smart-complaint-server.onrender.com)
 
-## Tech Stack
-- MongoDB
-- Express.js
-- React.js
-- Node.js
-- Google Gemini API (for NLP)
+## 🚀 Features
+- Complaint registration and tracking
+- Auto-categorization of complaints (using NLP)
+- User authentication (JWT-based)
+- Role-based access for admin and users
+- Admin dashboard for complaint management
 
+## 🛠 Tech Stack
+- **Frontend:** React, Vite, Tailwind CSS
+- **Backend:** Node.js, Express.js, MongoDB
+- **Deployment:** Render
 
+## 📦 Installation (Local Setup)
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/Japneet-29/smart-complaint-tracker.git
+cd <smart-complaint-tracker>
+npm install
