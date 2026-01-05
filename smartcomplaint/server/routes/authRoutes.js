@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
@@ -11,20 +11,18 @@ router.post('/register', async (req, res) => {
     const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ error: 'User already exists' });
 
-    const hashed = await bcrypt.hash(password, 10);
-
-    // Automatically assign admin rights to specific email
     const adminEmails = ['admin@pec.edu.in'];
     const isAdmin = adminEmails.includes(email.toLowerCase());
 
-    const user = new User({ name, email, password: hashed, isAdmin });
-    await user.save();
+    const user = new User({ name, email, password, isAdmin });
+    await user.save(); 
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Registration failed' });
   }
 });
+
 
 // Login
 router.post('/login', async (req, res) => {
