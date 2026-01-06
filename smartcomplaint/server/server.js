@@ -30,6 +30,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Backend is live ✅');
 });
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/complaints', complaintRoutes);
 
@@ -43,7 +46,4 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.error('❌ MongoDB connection error:', err));
   
 
-app.get("/health", (req, res) => {
-  res.status(200).send("OK");
-});
 
