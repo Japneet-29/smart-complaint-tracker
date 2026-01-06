@@ -1,3 +1,20 @@
+
+:root {
+  --bg: #f6f8fa;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --accent: #06b6d4;
+  --success: #10b981;
+  --glass: rgba(16,24,40,0.03);
+}
+
+body {
+  background: var(--bg);
+  color: #0f172a;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +56,44 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Global button styles */
+.btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.55rem 0.9rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.08);
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid rgba(37,99,235,0.12);
+  box-shadow: none;
+}
+
+.btn.submit {
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+}
+
+.btn.resolve {
+  background: linear-gradient(90deg, var(--success), #059669);
+}
+
+/* Small utilities */
+.small { width: 50%; }
+
+/* Ensure inputs are readable app-wide */
+input, textarea, select {
+  color: #000;
+  caret-color: var(--primary);
+}
+input::placeholder, textarea::placeholder, select::placeholder {
+  color: rgba(15,23,42,0.45);
 }
