@@ -61,20 +61,22 @@ function AdminPage() {
     }
   };
   const markAsResolved = async (id) => {
-    try {
-      const token = localStorage.getItem("token");
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
+  try {
+    const token = localStorage.getItem("token");
+    await api.patch(
+      `/api/complaints/${id}/status`,
+      { status: "resolved" },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    toast.success("Marked as resolved");
+    fetchComplaints();
+  } catch (err) {
+    toast.error("Failed to update status");
+  }
+};
 
-      await api.put(`/api/complaints/${id}/resolve`, {}, { headers });
-      toast.success("Marked as resolved");
-      fetchComplaints(); // Refresh the list
-    } catch (err) {
-      toast.error("Failed to update status");
-      console.error(err);
-    }
-  };
 
   return (
     <div style={{ maxWidth: 700, margin: "auto", padding: 20 }}>

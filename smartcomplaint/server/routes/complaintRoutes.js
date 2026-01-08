@@ -60,19 +60,36 @@ router.get('/admin', authMiddleware, async (req, res) => {
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     const complaint = await Complaint.findById(req.params.id);
-    if (!complaint) return res.status(404).json({ error: 'Complaint not found' });
-
-    const user = await User.findById(req.user.id);
-    if (!user || !user.isAdmin) {
-      return res.status(403).json({ error: 'Access denied' });
+    if (!complaint) {
+      return res.status(404).json({ error: 'Complaint not found' });
     }
 
-    await complaint.deleteOne();
-    res.json({ message: 'Complaint deleted' });
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+
+
+    if (user.isAdmin) {
+      await complaint.deleteOne();
+      return res.json({ message: 'Complaint deleted' });
+    }
+
+    if (complaint.user.toString() === req.user.id) {
+      await complaint.deleteOne();
+      return res.json({ message: 'Complaint deleted' });
+    }
+
+    return res.status(403).json({ error: 'Access denied' });
+
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Delete failed' });
   }
 });
+
+
+
 router.patch('/:id/status', authMiddleware, async (req, res) => {
   try {
     const complaint = await Complaint.findById(req.params.id);

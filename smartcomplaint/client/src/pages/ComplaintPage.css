@@ -185,6 +185,20 @@ input:focus, textarea:focus, select:focus {
   text-decoration: line-through;
   color: rgba(0,0,0,0.6);
 }
+.btn.danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn.danger:hover {
+  background: #dc2626;
+}
+
+.left-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 
 /* Ensure the badge stays fully visible regardless of parent opacity */
 .resolved .status { opacity: 1 !important; }

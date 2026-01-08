@@ -71,6 +71,30 @@ function ComplaintPage() {
     }
   };
 
+  const handleDelete = async (id) => {
+  if (!window.confirm('Are you sure you want to delete this complaint?')) return;
+
+  try {
+    const token = localStorage.getItem("token");
+    console.log("TOKEN:", token);
+
+    await api.delete(`/api/complaints/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    toast.success('Complaint deleted');
+
+    
+    setComplaints((prev) => prev.filter((c) => c._id !== id));
+  } catch (err) {
+  console.error("DELETE ERROR:", err.response?.data || err.message);
+  toast.error(err.response?.data?.error || "Failed to delete complaint");
+}
+
+};
+
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
   const sortedComplaints = [...complaints].sort((a, b) => {
@@ -177,11 +201,27 @@ function ComplaintPage() {
                   <p className="description">{c.description}</p>
 
                   <div className="item-actions">
-                    {c.status !== 'resolved' && (
-                      <button onClick={() => markResolved(c._id)} className="btn resolve">Mark Resolved</button>
-                    )}
-                    <div className={`status ${c.status}`}>{c.status}</div>
-                  </div>
+                    <div className="left-actions">
+                      {c.status !== 'resolved' && (
+                        <button
+                          onClick={() => markResolved(c._id)}
+                          className="btn resolve"
+                        >
+                          Mark Resolved
+                        </button>
+                      )}
+
+                      <button
+                        onClick={() => handleDelete(c._id)}
+                        className="btn danger"
+                      >
+                        Delete
+                      </button>
+                    </div>
+
+  <div className={`status ${c.status}`}>{c.status}</div>
+</div>
+
                 </article>
               ))}
             </div>
